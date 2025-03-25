@@ -18,6 +18,9 @@
             --internals-color: #9b59b6;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
         }
 
         * {
@@ -445,6 +448,63 @@
             margin-top: 50px;
         }
 
+        /* New Attendance Status Styles */
+        .attendance-status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .status-label {
+            font-weight: 600;
+        }
+
+        .status-value {
+            font-weight: 700;
+        }
+
+        .eligible {
+            color: var(--success-color);
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+
+        .condonation {
+            color: var(--warning-color);
+            background-color: rgba(243, 156, 18, 0.1);
+        }
+
+        .not-eligible {
+            color: var(--danger-color);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Improved Internals Result */
+        .internals-result {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--internals-color);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .internals-result i {
+            margin-left: 10px;
+            font-size: 1.5rem;
+        }
+
         @media (max-width: 768px) {
             .main-menu {
                 grid-template-columns: 1fr;
@@ -615,6 +675,22 @@
                 
                 <div class="result-label" style="margin-top: 20px;">Overall Attendance Percentage</div>
                 <div id="overall-percentage" class="result-value"></div>
+                
+                <div id="attendance-status" class="attendance-status" style="display: none;">
+                    <h3 style="text-align: center; margin-bottom: 15px;">Attendance Status</h3>
+                    <div id="eligibility-status" class="status-item">
+                        <span class="status-label">Eligibility Status:</span>
+                        <span class="status-value" id="eligibility-text"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">For Condonation you need:</span>
+                        <span class="status-value" id="condonation-classes"></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-label">For Eligibility you need:</span>
+                        <span class="status-value" id="eligibility-classes"></span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -660,7 +736,7 @@
                 
                 <div id="theory-result" class="result-container">
                     <div class="result-label">Your Internal Marks</div>
-                    <div id="theory-internals" class="result-value"></div>
+                    <div id="theory-internals" class="internals-result"></div>
                 </div>
             </div>
             
@@ -694,7 +770,7 @@
                 
                 <div id="integrated-result" class="result-container">
                     <div class="result-label">Your Internal Marks</div>
-                    <div id="integrated-internals" class="result-value"></div>
+                    <div id="integrated-internals" class="internals-result"></div>
                 </div>
             </div>
         </div>
@@ -756,6 +832,8 @@
                             <option value="8">B (70-79%)</option>
                             <option value="7">C (60-69%)</option>
                             <option value="6">D (50-59%)</option>
+                            <option value="5">E (40-49%)</option>
+                            <option value="0">F (Below 40%)</option>
                         </select>
                     </div>
                 `;
@@ -808,7 +886,7 @@
                     </div>
                     <div>
                         <label for="semester${i}-credits">Total Credits</label>
-                        <input type="number" id="semester${i}-credits" min="1" max="50" value="20">
+                        <input type="number" id="semester${i}-credits" min="1" max="50" value="25">
                     </div>
                 `;
                 container.appendChild(semesterDiv);
@@ -872,6 +950,34 @@
             document.getElementById('overall-percentage').textContent = overallPercentage + '%';
             document.getElementById('attendance-result').classList.add('show');
             
+            // Calculate attendance status
+            const condonationThreshold = Math.ceil(0.65 * totalSessions);
+            const eligibilityThreshold = Math.ceil(0.75 * totalSessions);
+            
+            const condonationNeeded = Math.max(0, condonationThreshold - presentSessions);
+            const eligibilityNeeded = Math.max(0, eligibilityThreshold - presentSessions);
+            
+            const statusContainer = document.getElementById('attendance-status');
+            statusContainer.style.display = 'block';
+            
+            document.getElementById('condonation-classes').textContent = condonationNeeded + ' more classes';
+            document.getElementById('eligibility-classes').textContent = eligibilityNeeded + ' more classes';
+            
+            const eligibilityText = document.getElementById('eligibility-text');
+            if (presentSessions >= eligibilityThreshold) {
+                eligibilityText.textContent = 'You are eligible';
+                eligibilityText.parentElement.classList.add('eligible');
+                eligibilityText.parentElement.classList.remove('condonation', 'not-eligible');
+            } else if (presentSessions >= condonationThreshold) {
+                eligibilityText.textContent = 'Eligible for condonation';
+                eligibilityText.parentElement.classList.add('condonation');
+                eligibilityText.parentElement.classList.remove('eligible', 'not-eligible');
+            } else {
+                eligibilityText.textContent = 'Not eligible';
+                eligibilityText.parentElement.classList.add('not-eligible');
+                eligibilityText.parentElement.classList.remove('eligible', 'condonation');
+            }
+            
             // Add pulse animation
             document.querySelectorAll('#faculty-percentage, #overall-percentage').forEach(el => {
                 el.classList.add('pulse');
@@ -919,15 +1025,23 @@
             }
             
             const testMarks = ((test1 + test2 + test3) / 3).toFixed(2);
-            const internals = (parseFloat(testMarks) + attendance + assignment).toFixed(2);
+            const internals = Math.ceil(parseFloat(testMarks) + attendance + assignment);
             
-            document.getElementById('theory-internals').textContent = internals;
+            const resultElement = document.getElementById('theory-internals');
+            resultElement.innerHTML = internals;
+            
+            if (internals >= 40) {
+                resultElement.innerHTML += ' <i class="fas fa-check-circle" style="color: var(--success-color);"></i>';
+            } else {
+                resultElement.innerHTML += ' <i class="fas fa-exclamation-circle" style="color: var(--danger-color);"></i>';
+            }
+            
             document.getElementById('theory-result').classList.add('show');
             
             // Add pulse animation
-            document.getElementById('theory-internals').classList.add('pulse');
+            resultElement.classList.add('pulse');
             setTimeout(() => {
-                document.getElementById('theory-internals').classList.remove('pulse');
+                resultElement.classList.remove('pulse');
             }, 1000);
         }
         

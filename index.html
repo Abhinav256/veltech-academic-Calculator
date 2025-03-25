@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veltech University - Academic Tools</title>
+    <meta name="viewport" content="width=device-widtch, initial-scale=1.0">
+    <title>Veltech Calculator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -58,6 +59,7 @@
                 opacity: 0;
                 transform: translateY(-20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -191,7 +193,7 @@
             border-radius: 5px;
             padding: 10px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: var(--transition);
             height: 60px;
@@ -204,7 +206,7 @@
 
         .mini-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         .mini-card i {
@@ -249,6 +251,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -304,7 +307,8 @@
             color: var(--dark-color);
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
@@ -313,7 +317,8 @@
             transition: var(--transition);
         }
 
-        input:focus, select:focus {
+        input:focus,
+        select:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
@@ -429,7 +434,8 @@
             margin-top: 10px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -463,7 +469,7 @@
             padding: 10px;
             border-radius: 5px;
             background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .status-label {
@@ -509,11 +515,11 @@
             .main-menu {
                 grid-template-columns: 1fr;
             }
-            
+
             .mini-menu {
                 grid-template-columns: 1fr 1fr;
             }
-            
+
             .subject-row {
                 grid-template-columns: 1fr;
             }
@@ -524,9 +530,11 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.05);
             }
+
             100% {
                 transform: scale(1);
             }
@@ -537,6 +545,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -601,19 +610,19 @@
                 <h2>GPA Calculator</h2>
                 <button class="back-btn" onclick="hideSection('gpa')"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
-            
+
             <div class="form-group">
                 <label for="gpa-subjects">Number of Subjects</label>
                 <input type="number" id="gpa-subjects" min="1" max="10" value="5">
             </div>
-            
+
             <button class="btn-block" onclick="generateSubjectInputs()">Generate Subjects</button>
-            
+
             <div id="gpa-subject-container" class="subject-container" style="display: none;">
                 <div id="gpa-subject-inputs"></div>
                 <button class="btn-block" onclick="calculateGPA()">Calculate GPA</button>
             </div>
-            
+
             <div id="gpa-result" class="result-container">
                 <div class="result-label">Your GPA is</div>
                 <div id="gpa-value" class="result-value"></div>
@@ -626,19 +635,19 @@
                 <h2>CGPA Calculator</h2>
                 <button class="back-btn" onclick="hideSection('cgpa')"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
-            
+
             <div class="form-group">
                 <label for="cgpa-semesters">Number of Semesters Completed</label>
                 <input type="number" id="cgpa-semesters" min="1" max="10" value="1">
             </div>
-            
+
             <button class="btn-block" onclick="generateSemesterInputs()">Generate Semesters</button>
-            
+
             <div id="cgpa-semester-container" class="subject-container" style="display: none;">
                 <div id="cgpa-semester-inputs"></div>
                 <button class="btn-block" onclick="calculateCGPA()">Calculate CGPA</button>
             </div>
-            
+
             <div id="cgpa-result" class="result-container">
                 <div class="result-label">Your CGPA is</div>
                 <div id="cgpa-value" class="result-value"></div>
@@ -651,31 +660,31 @@
                 <h2>Attendance Calculator</h2>
                 <button class="back-btn" onclick="hideSection('attendance')"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
-            
+
             <div class="form-group">
-                <label for="total-sessions">Total Sessions Conducted</label>
+                <label for="total-sessions">Total Sessions</label>
                 <input type="number" id="total-sessions" min="1">
             </div>
-            
+
             <div class="form-group">
                 <label for="faculty-sessions">Faculty Sessions (Classes taken by faculty)</label>
                 <input type="number" id="faculty-sessions" min="1">
             </div>
-            
+
             <div class="form-group">
                 <label for="present-sessions">Sessions Attended</label>
                 <input type="number" id="present-sessions" min="0">
             </div>
-            
+
             <button class="btn-block" onclick="calculateAttendance()">Calculate Attendance</button>
-            
+
             <div id="attendance-result" class="result-container">
-                <div class="result-label">Faculty Attendance Percentage</div>
+                <div class="result-label">Present Percentage</div>
                 <div id="faculty-percentage" class="result-value"></div>
-                
+
                 <div class="result-label" style="margin-top: 20px;">Overall Attendance Percentage</div>
                 <div id="overall-percentage" class="result-value"></div>
-                
+
                 <div id="attendance-status" class="attendance-status" style="display: none;">
                     <h3 style="text-align: center; margin-bottom: 15px;">Attendance Status</h3>
                     <div id="eligibility-status" class="status-item">
@@ -700,74 +709,74 @@
                 <h2>Internals Calculator</h2>
                 <button class="back-btn" onclick="hideSection('internals')"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
-            
+
             <div class="tabs">
                 <div class="tab active" onclick="switchTab('theory')">Theory</div>
                 <div class="tab" onclick="switchTab('integrated')">Integrated</div>
             </div>
-            
+
             <div id="theory-tab" class="tab-content active">
                 <div class="form-group">
                     <label for="test1">Test 1 Marks (Max 30)</label>
                     <input type="number" id="test1" min="0" max="30">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="test2">Test 2 Marks (Max 30)</label>
                     <input type="number" id="test2" min="0" max="30">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="test3">Test 3 Marks (Max 30)</label>
                     <input type="number" id="test3" min="0" max="30">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="attendance-marks">Attendance Marks (Max 5)</label>
                     <input type="number" id="attendance-marks" min="0" max="5">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="assignment-marks">Assignment Marks (Max 5)</label>
                     <input type="number" id="assignment-marks" min="0" max="5">
                 </div>
-                
+
                 <button class="btn-block" onclick="calculateTheoryInternals()">Calculate Internals</button>
-                
+
                 <div id="theory-result" class="result-container">
                     <div class="result-label">Your Internal Marks</div>
                     <div id="theory-internals" class="internals-result"></div>
                 </div>
             </div>
-            
+
             <div id="integrated-tab" class="tab-content">
                 <div class="form-group">
                     <label for="mid1">Mid 1 Marks (Max 20)</label>
                     <input type="number" id="mid1" min="0" max="20">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="mid2">Mid 2 Marks (Max 20)</label>
                     <input type="number" id="mid2" min="0" max="20">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="lab-marks">Lab Marks (Max 20)</label>
                     <input type="number" id="lab-marks" min="0" max="20">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="integrated-attendance">Attendance Marks (Max 5)</label>
                     <input type="number" id="integrated-attendance" min="0" max="5">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="integrated-assignment">Assignment Marks (Max 5)</label>
                     <input type="number" id="integrated-assignment" min="0" max="5">
                 </div>
-                
+
                 <button class="btn-block" onclick="calculateIntegratedInternals()">Calculate Internals</button>
-                
+
                 <div id="integrated-result" class="result-container">
                     <div class="result-label">Your Internal Marks</div>
                     <div id="integrated-internals" class="internals-result"></div>
@@ -786,35 +795,41 @@
             // Hide main menu and show mini menu
             document.querySelector('.main-menu').style.display = 'none';
             document.getElementById('mini-menu').classList.add('active');
-            
+
             // Hide all calculator sections
             document.querySelectorAll('.calculator-section').forEach(el => {
                 el.classList.remove('active');
             });
-            
+
             // Show selected calculator section
             document.getElementById(`${section}-section`).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
-        
+
         // Hide section and show main menu
         function hideSection(section) {
             // Hide current section
             document.getElementById(`${section}-section`).classList.remove('active');
-            
+
             // Show main menu and hide mini menu
             document.querySelector('.main-menu').style.display = 'grid';
             document.getElementById('mini-menu').classList.remove('active');
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
-        
+
         // Generate subject inputs for GPA calculator
         function generateSubjectInputs() {
             const numSubjects = parseInt(document.getElementById('gpa-subjects').value);
             const container = document.getElementById('gpa-subject-inputs');
             container.innerHTML = '';
-            
+
             for (let i = 1; i <= numSubjects; i++) {
                 const subjectDiv = document.createElement('div');
                 subjectDiv.className = 'subject-row';
@@ -839,43 +854,43 @@
                 `;
                 container.appendChild(subjectDiv);
             }
-            
+
             document.getElementById('gpa-subject-container').style.display = 'block';
             document.getElementById('gpa-result').classList.remove('show');
         }
-        
+
         // Calculate GPA
         function calculateGPA() {
             const numSubjects = parseInt(document.getElementById('gpa-subjects').value);
             let totalCredits = 0;
             let totalGradePoints = 0;
-            
+
             for (let i = 1; i <= numSubjects; i++) {
                 const credits = parseInt(document.getElementById(`subject${i}-credits`).value);
                 const grade = parseInt(document.getElementById(`subject${i}-grade`).value);
-                
+
                 totalCredits += credits;
                 totalGradePoints += credits * grade;
             }
-            
+
             const gpa = (totalGradePoints / totalCredits).toFixed(2);
-            
+
             document.getElementById('gpa-value').textContent = gpa;
             document.getElementById('gpa-result').classList.add('show');
-            
+
             // Add pulse animation
             document.getElementById('gpa-value').classList.add('pulse');
             setTimeout(() => {
                 document.getElementById('gpa-value').classList.remove('pulse');
             }, 1000);
         }
-        
+
         // Generate semester inputs for CGPA calculator
         function generateSemesterInputs() {
             const numSemesters = parseInt(document.getElementById('cgpa-semesters').value);
             const container = document.getElementById('cgpa-semester-inputs');
             container.innerHTML = '';
-            
+
             for (let i = 1; i <= numSemesters; i++) {
                 const semesterDiv = document.createElement('div');
                 semesterDiv.className = 'subject-row';
@@ -891,78 +906,77 @@
                 `;
                 container.appendChild(semesterDiv);
             }
-            
+
             document.getElementById('cgpa-semester-container').style.display = 'block';
             document.getElementById('cgpa-result').classList.remove('show');
         }
-        
+
         // Calculate CGPA
         function calculateCGPA() {
             const numSemesters = parseInt(document.getElementById('cgpa-semesters').value);
             let totalCredits = 0;
             let totalGradePoints = 0;
-            
+
             for (let i = 1; i <= numSemesters; i++) {
                 const gpa = parseFloat(document.getElementById(`semester${i}-gpa`).value);
                 const credits = parseInt(document.getElementById(`semester${i}-credits`).value);
-                
+
                 if (isNaN(gpa)) {
                     alert(`Please enter GPA for Semester ${i}`);
                     return;
                 }
-                
+
                 totalCredits += credits;
                 totalGradePoints += credits * gpa;
             }
-            
+
             const cgpa = (totalGradePoints / totalCredits).toFixed(2);
-            
+
             document.getElementById('cgpa-value').textContent = cgpa;
             document.getElementById('cgpa-result').classList.add('show');
-            
+
             // Add pulse animation
             document.getElementById('cgpa-value').classList.add('pulse');
             setTimeout(() => {
                 document.getElementById('cgpa-value').classList.remove('pulse');
             }, 1000);
         }
-        
+
         // Calculate attendance percentages
         function calculateAttendance() {
             const totalSessions = parseInt(document.getElementById('total-sessions').value);
             const facultySessions = parseInt(document.getElementById('faculty-sessions').value);
             const presentSessions = parseInt(document.getElementById('present-sessions').value);
-            
+
+
+
+            let facultyPercentage = ((presentSessions / facultySessions) * 100).toFixed(2);
+            let overallPercentage = ((presentSessions / totalSessions) * 100).toFixed(2);
             if (presentSessions > facultySessions) {
                 alert('Present sessions cannot be more than faculty sessions');
                 return;
             }
-            
-            if (facultySessions > totalSessions) {
-                alert('Faculty sessions cannot be more than total sessions');
-                return;
-            }
-            
-            const facultyPercentage = ((presentSessions / facultySessions) * 100).toFixed(2);
-            const overallPercentage = ((presentSessions / totalSessions) * 100).toFixed(2);
-            
+            facultyPercentage = Math.min(parseFloat(facultyPercentage), 100);
+            overallPercentage = Math.min(parseFloat(overallPercentage), 100);
+
+
             document.getElementById('faculty-percentage').textContent = facultyPercentage + '%';
             document.getElementById('overall-percentage').textContent = overallPercentage + '%';
             document.getElementById('attendance-result').classList.add('show');
-            
+
             // Calculate attendance status
             const condonationThreshold = Math.ceil(0.65 * totalSessions);
             const eligibilityThreshold = Math.ceil(0.75 * totalSessions);
-            
+
             const condonationNeeded = Math.max(0, condonationThreshold - presentSessions);
             const eligibilityNeeded = Math.max(0, eligibilityThreshold - presentSessions);
-            
+
             const statusContainer = document.getElementById('attendance-status');
             statusContainer.style.display = 'block';
-            
+
             document.getElementById('condonation-classes').textContent = condonationNeeded + ' more classes';
             document.getElementById('eligibility-classes').textContent = eligibilityNeeded + ' more classes';
-            
+
             const eligibilityText = document.getElementById('eligibility-text');
             if (presentSessions >= eligibilityThreshold) {
                 eligibilityText.textContent = 'You are eligible';
@@ -977,7 +991,7 @@
                 eligibilityText.parentElement.classList.add('not-eligible');
                 eligibilityText.parentElement.classList.remove('eligible', 'condonation');
             }
-            
+
             // Add pulse animation
             document.querySelectorAll('#faculty-percentage, #overall-percentage').forEach(el => {
                 el.classList.add('pulse');
@@ -986,21 +1000,21 @@
                 }, 1000);
             });
         }
-        
+
         // Switch between theory and integrated tabs
         function switchTab(tab) {
             document.querySelectorAll('.tab').forEach(el => {
                 el.classList.remove('active');
             });
-            
+
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.remove('active');
             });
-            
+
             document.querySelector(`.tab[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById(`${tab}-tab`).classList.add('active');
         }
-        
+
         // Calculate theory internals
         function calculateTheoryInternals() {
             const test1 = parseInt(document.getElementById('test1').value);
@@ -1008,43 +1022,43 @@
             const test3 = parseInt(document.getElementById('test3').value);
             const attendance = parseInt(document.getElementById('attendance-marks').value);
             const assignment = parseInt(document.getElementById('assignment-marks').value);
-            
+
             if (test1 > 30 || test2 > 30 || test3 > 30) {
                 alert('Test marks cannot exceed 30');
                 return;
             }
-            
+
             if (attendance > 5) {
                 alert('Attendance marks cannot exceed 5');
                 return;
             }
-            
+
             if (assignment > 5) {
                 alert('Assignment marks cannot exceed 5');
                 return;
             }
-            
+
             const testMarks = ((test1 + test2 + test3) / 3).toFixed(2);
             const internals = Math.ceil(parseFloat(testMarks) + attendance + assignment);
-            
+
             const resultElement = document.getElementById('theory-internals');
             resultElement.innerHTML = internals;
-            
+
             if (internals >= 40) {
                 resultElement.innerHTML += ' <i class="fas fa-check-circle" style="color: var(--success-color);"></i>';
             } else {
                 resultElement.innerHTML += ' <i class="fas fa-exclamation-circle" style="color: var(--danger-color);"></i>';
             }
-            
+
             document.getElementById('theory-result').classList.add('show');
-            
+
             // Add pulse animation
             resultElement.classList.add('pulse');
             setTimeout(() => {
                 resultElement.classList.remove('pulse');
             }, 1000);
         }
-        
+
         // Calculate integrated internals
         function calculateIntegratedInternals() {
             const mid1 = parseInt(document.getElementById('mid1').value);
@@ -1052,33 +1066,33 @@
             const labMarks = parseInt(document.getElementById('lab-marks').value);
             const attendance = parseInt(document.getElementById('integrated-attendance').value);
             const assignment = parseInt(document.getElementById('integrated-assignment').value);
-            
+
             if (mid1 > 20 || mid2 > 20) {
                 alert('Mid marks cannot exceed 20');
                 return;
             }
-            
+
             if (labMarks > 20) {
                 alert('Lab marks cannot exceed 20');
                 return;
             }
-            
+
             if (attendance > 5) {
                 alert('Attendance marks cannot exceed 5');
                 return;
             }
-            
+
             if (assignment > 5) {
                 alert('Assignment marks cannot exceed 5');
                 return;
             }
-            
+
             const midMarks = ((mid1 + mid2) / 4).toFixed(2);
             const internals = (parseFloat(midMarks) + attendance + assignment + labMarks).toFixed(2);
-            
+
             document.getElementById('integrated-internals').textContent = internals;
             document.getElementById('integrated-result').classList.add('show');
-            
+
             // Add pulse animation
             document.getElementById('integrated-internals').classList.add('pulse');
             setTimeout(() => {
@@ -1087,4 +1101,5 @@
         }
     </script>
 </body>
+
 </html>

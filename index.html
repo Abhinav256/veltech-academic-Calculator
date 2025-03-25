@@ -84,11 +84,13 @@
             opacity: 0.9;
         }
 
+        /* Main Menu Styles */
         .main-menu {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 25px;
             margin: 40px 0;
+            transition: var(--transition);
         }
 
         .menu-card {
@@ -120,7 +122,6 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background: var(--gpa-color);
         }
 
         .menu-card.gpa::before {
@@ -142,7 +143,6 @@
         .menu-card i {
             font-size: 3rem;
             margin-bottom: 15px;
-            color: var(--gpa-color);
         }
 
         .menu-card.gpa i {
@@ -170,6 +170,67 @@
             color: #666;
         }
 
+        /* Mini Menu Styles */
+        .mini-menu {
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            transition: var(--transition);
+        }
+
+        .mini-menu.active {
+            display: grid;
+        }
+
+        .mini-card {
+            background: white;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: var(--transition);
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 3px solid;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .mini-card i {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .mini-card h3 {
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        .mini-card.gpa {
+            border-top-color: var(--gpa-color);
+        }
+
+        .mini-card.cgpa {
+            border-top-color: var(--cgpa-color);
+        }
+
+        .mini-card.attendance {
+            border-top-color: var(--attendance-color);
+        }
+
+        .mini-card.internals {
+            border-top-color: var(--internals-color);
+        }
+
+        /* Calculator Section Styles */
         .calculator-section {
             background: white;
             border-radius: 10px;
@@ -389,12 +450,16 @@
                 grid-template-columns: 1fr;
             }
             
+            .mini-menu {
+                grid-template-columns: 1fr 1fr;
+            }
+            
             .subject-row {
                 grid-template-columns: 1fr;
             }
         }
 
-        /* Pulse animation for results */
+        /* Animations */
         @keyframes pulse {
             0% {
                 transform: scale(1);
@@ -409,65 +474,6 @@
 
         .pulse {
             animation: pulse 1s infinite;
-        }
-
-        /* Loading spinner */
-        .spinner {
-            display: none;
-            width: 40px;
-            height: 40px;
-            margin: 20px auto;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--secondary-color);
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading .spinner {
-            display: block;
-        }
-
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            margin-left: 5px;
-            cursor: help;
-        }
-
-        .tooltip i {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-        }
-
-        .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.8rem;
-            font-weight: normal;
-        }
-
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
         }
     </style>
 </head>
@@ -485,6 +491,7 @@
     </header>
 
     <div class="container">
+        <!-- Main Menu -->
         <div class="main-menu">
             <div class="menu-card gpa" onclick="showSection('gpa')">
                 <i class="fas fa-calculator"></i>
@@ -505,6 +512,26 @@
                 <i class="fas fa-clipboard-list"></i>
                 <h2>Calculate Internals</h2>
                 <p>Calculate your internal assessment marks</p>
+            </div>
+        </div>
+
+        <!-- Mini Menu (hidden by default) -->
+        <div id="mini-menu" class="mini-menu">
+            <div class="mini-card gpa" onclick="showSection('gpa')">
+                <i class="fas fa-calculator"></i>
+                <h3>GPA</h3>
+            </div>
+            <div class="mini-card cgpa" onclick="showSection('cgpa')">
+                <i class="fas fa-chart-line"></i>
+                <h3>CGPA</h3>
+            </div>
+            <div class="mini-card attendance" onclick="showSection('attendance')">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Attendance</h3>
+            </div>
+            <div class="mini-card internals" onclick="showSection('internals')">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Internals</h3>
             </div>
         </div>
 
@@ -530,52 +557,6 @@
             <div id="gpa-result" class="result-container">
                 <div class="result-label">Your GPA is</div>
                 <div id="gpa-value" class="result-value"></div>
-            </div>
-            
-            <div class="grade-scale">
-                <h3>Grade Scale</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Grade</th>
-                            <th>Points</th>
-                            <th>Percentage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>S</td>
-                            <td>10</td>
-                            <td>90-100%</td>
-                        </tr>
-                        <tr>
-                            <td>A</td>
-                            <td>9</td>
-                            <td>80-89%</td>
-                        </tr>
-                        <tr>
-                            <td>B</td>
-                            <td>8</td>
-                            <td>70-79%</td>
-                        </tr>
-                        <tr>
-                            <td>C</td>
-                            <td>7</td>
-                            <td>60-69%</td>
-                        </tr>
-                        <tr>
-                            <td>D</td>
-                            <td>6</td>
-                            <td>50-59%</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>F</td>
-                            <td>0</td>
-                            <td>Below 50%</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -629,7 +610,7 @@
             <button class="btn-block" onclick="calculateAttendance()">Calculate Attendance</button>
             
             <div id="attendance-result" class="result-container">
-                <div class="result-label">Present Attendence Percentage</div>
+                <div class="result-label">Faculty Attendance Percentage</div>
                 <div id="faculty-percentage" class="result-value"></div>
                 
                 <div class="result-label" style="margin-top: 20px;">Overall Attendance Percentage</div>
@@ -720,23 +701,36 @@
     </div>
 
     <footer class="footer">
-        <p>&copy; 2025 ABHINAV REDDY(VTU21834). All rights reserved.</p>
+        <p>&copy; 2023 Veltech University. All rights reserved.</p>
     </footer>
 
     <script>
-        // Show selected section and hide others
+        // Show selected section and minimize menu
         function showSection(section) {
+            // Hide main menu and show mini menu
+            document.querySelector('.main-menu').style.display = 'none';
+            document.getElementById('mini-menu').classList.add('active');
+            
+            // Hide all calculator sections
             document.querySelectorAll('.calculator-section').forEach(el => {
                 el.classList.remove('active');
             });
             
+            // Show selected calculator section
             document.getElementById(`${section}-section`).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Hide all sections and show main menu
+        // Hide section and show main menu
         function hideSection(section) {
+            // Hide current section
             document.getElementById(`${section}-section`).classList.remove('active');
+            
+            // Show main menu and hide mini menu
+            document.querySelector('.main-menu').style.display = 'grid';
+            document.getElementById('mini-menu').classList.remove('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
         // Generate subject inputs for GPA calculator
@@ -749,7 +743,10 @@
                 const subjectDiv = document.createElement('div');
                 subjectDiv.className = 'subject-row';
                 subjectDiv.innerHTML = `
-                    
+                    <div>
+                        <label for="subject${i}-name">Subject ${i} Name</label>
+                        <input type="text" id="subject${i}-name" placeholder="Enter subject name">
+                    </div>
                     <div>
                         <label for="subject${i}-credits">Credits</label>
                         <input type="number" id="subject${i}-credits" min="1" max="10" value="3">
@@ -762,8 +759,8 @@
                             <option value="8">B (70-79%)</option>
                             <option value="7">C (60-69%)</option>
                             <option value="6">D (50-59%)</option>
-                            
-                            <option value="0">F (Below 50%)</option>
+                            <option value="5">E (40-49%)</option>
+                            <option value="0">F (Below 40%)</option>
                         </select>
                     </div>
                 `;
